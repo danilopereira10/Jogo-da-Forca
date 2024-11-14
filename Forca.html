@@ -1,0 +1,219 @@
+﻿<html>
+<head>
+    <title>Forca</title>
+    <script type="text/javascript">
+         var t = 0;
+		var j = 0;
+		var i = 0;
+        var c = 0;
+		var f = 0
+        var pala = new Array("banana", "tartaruga", "porta","telhado","festa","chuveiro", "elefante","dinossauro","disney","amor");
+	    var sortearpalavra;
+        var letr_err;
+		var traço;
+		function add(){
+		pala[pala.length] = document.getElementById("adicionar").value;
+		alert("adicionado");
+		}
+			function jogar()
+			{ 
+				for(i=1;i<=6;i++)
+				document.getElementById(i.toString()).innerHTML = "";
+				j=0;
+				e=0;
+			    sortearpalavra = Math.floor(Math.random()* pala.length);
+				document.getElementById("palavra").innerHTML = " ";
+				traços();
+				t=0;
+				c=0;
+				letr_err = new Array();
+				document.getElementById("le").innerHTML =  " ";
+				document.getElementById("erro").innerHTML =  " ";	
+			}
+			function traços()
+			{
+			   var senha = pala[sortearpalavra].split("");
+			   traço = new Array();
+			   for(i=0;i<pala[sortearpalavra].length;i++)
+			    {
+					if(senha[i] == " ")
+					{
+					alert("mar");
+						traço[i]= "&nbsp&nbsp&nbsp&nbsp";
+						document.getElementById("palavra").innerHTML += traço[i];
+												f++;
+												alert("putz");
+					}
+					else
+					{
+						traço[i] = "_";
+						document.getElementById("palavra").innerHTML += traço[i];
+						document.getElementById("palavra").innerHTML += " ";
+					}
+			    }
+			}
+		function jasei(){
+			if(c==pala[sortearpalavra].length - f||t == 6)
+			{
+				alert("partida já encerrada, comece um novo jogo");
+			}
+			else 
+			{
+				if(Acento(document.getElementById("seitudo").value.toUpperCase())== Acento(pala[sortearpalavra].toUpperCase()))
+				{
+					alert("Parabéns, VENCEU O JOGO com profissionalismo!!! Alerts não são nada emocionantes.");
+				}
+				else 
+				{
+					alert("Que pena, PERDEU O JOGO com profissionalismo!!! Alerts não são nada emocionantes.");
+					for(t=1;t<=6;t++)
+						boneco();
+				}
+				document.getElementById('palavra').innerHTML=pala[sortearpalavra].toUpperCase();
+			}
+		}
+        function forca() 
+		{
+		    var senha = pala[sortearpalavra].split("");
+            var entrada = document.getElementById("tre").value;
+            var errou = 0;
+			
+			entrada = Acento(entrada.toUpperCase());
+				if(c==pala[sortearpalavra].length - f ||t == 6)
+				{
+					alert("partida já encerrada, comece um novo jogo");
+		        }
+				else 
+				{
+					for (i = 0; i < traço.length || i < letr_err.length; i++) {
+						if(entrada.length > 1 || Acento(entrada) == "" || Acento(entrada) == " ")
+						{
+							entrada = (prompt("1NÃO PODE \ DIGITE OUTRA LETRA: ")).toUpperCase();
+							i = 0;
+						}
+						if (Acento(entrada.toUpperCase()) == Acento(traço[i].toUpperCase()) && i < pala[sortearpalavra].length) 
+						{
+							i = -1;
+							entrada = (prompt("2NÃO PODE \ DIGITE OUTRA LETRA: ")).toUpperCase();
+						}
+						else
+							if (i<letr_err.length && Acento(entrada.toUpperCase()) == Acento(letr_err[i].toUpperCase())) 
+							{
+								entrada = (prompt("3NÃO PODE \ DIGITE OUTRA LETRA: ")).toUpperCase();
+								i = -1;
+							}
+				}
+            if (c < pala[sortearpalavra].length - f) {
+			document.getElementById("palavra").innerHTML = " ";
+                for (i = 0; i < pala[sortearpalavra].length; i++) {
+                    if (Acento(senha[i].toUpperCase()) == Acento(entrada.toUpperCase())) {
+                        traço[i] = senha[i].toUpperCase();
+                        c++;
+					}
+                    else {
+                        errou++;
+
+                    }
+					document.getElementById("palavra").innerHTML += traço[i];
+					document.getElementById("palavra").innerHTML += " ";
+                    if (errou == pala[sortearpalavra].length) {
+                        t++;
+                        document.getElementById("erro").innerHTML = t.toString();
+                        letr_err[j] = entrada.toUpperCase();
+                        document.getElementById("le").innerHTML += letr_err[j];
+                        document.getElementById("le").innerHTML += " - ";
+                        j++;
+						boneco();
+                    }
+                }
+				
+            }
+			if(c==pala[sortearpalavra].length - f)
+				alert("VENCEU O JOGO!!! Alerts não são nada emocionantes.");
+			else
+            if (t == 6)
+			{
+                alert("PERDEU O JOGO!!! Alerts não são nada emocionantes.");
+				document.getElementById("palavra").innerHTML = pala[sortearpalavra].toUpperCase();
+		    }
+			}
+        }
+		function boneco(){
+				switch (t){
+				case 1:
+				document.getElementById("1").innerHTML = "o"
+				break
+				case 2:
+				document.getElementById("2").innerHTML = "|"
+				break
+				case 3:
+				document.getElementById("3").innerHTML = "/"
+				break
+				case 4:
+				document.getElementById("4").innerHTML = "\\"
+				break
+				case 5:
+				document.getElementById("5").innerHTML = "/"
+				break
+				case 6:
+				document.getElementById("6").innerHTML = "\\"
+				break
+				}
+				}
+					function Acento(str)
+{
+	
+    str = str.replace(/[ÀÁÂÃÄÅ]/,"A");
+    str = str.replace(/[ÈÉÊË]/,"E");
+    str = str.replace(/[ÍÌÎÏ]/,"I");
+	str = str.replace(/[ÔÕÓÒÖ]/,"O");
+    str = str.replace(/[ÛÚÙÜ]/,"U");
+    str = str.replace(/[Ç]/,"C");
+	str = str.replace(/[^A-Z]/gi,"");
+	return str;
+}
+
+    </script>
+</head>
+<body onload="jogar()" background="forcaa.jpg">
+<div style="position:absolute;top:10px;right:150px;align:right">
+<center>
+<font size="5" color="white">
+Você pode errar até <span id="qtderros"></span> vezes
+<p/>
+Letras Erradas: <span id="le"></span>
+<p/>
+ERROS: <span id="erro"></span>
+<p/>
+<span id="1"></span>
+<br/>
+<span id="3"></span>
+<span id="2"></span>
+<span id="4"></span>
+<br/>
+<span id="5"></span>
+<span id="6"></span>
+</center>
+</div>
+</font>
+<form>
+<table border="4" cellpadding="6" background="forcaa.jpg"><td><center>
+<font color="white" size="5">
+		Palavra: <span id="palavra"></span>
+		<p/>
+		Digite uma letra:
+		<input type="text" id="tre"/>
+		<input type="button" value="Entrar" onclick="forca()"/>
+		<p/>
+		Já sabe a palavra?
+		<input type="text" id="seitudo"/>
+		<input type="button" value="Confira" onclick="jasei()"/>
+		<p/>
+		Adicionar palavra:
+		<input type="text" id="adicionar"/>
+		<input type="button" value="Adicionar" onclick="add()"/>	
+		<p/>
+		<input type="button" value="Novo Jogo" onclick="jogar()"/>
+</center></td></font></table></form>
+</body>
+</html>
